@@ -66,8 +66,7 @@ One note before you delve into your tasks: for each endpoint you are expected to
 8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
-REVIEW_COMMENT
-```
+
 This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
 
 Endpoints
@@ -87,7 +86,43 @@ GET '/categories'
 '5' : "Entertainment",
 '6' : "Sports"}
 
-```
+GET '/categories/<int:category_id>'
+- fetches a single category of whatever the category id is 
+- request arguments: category_id
+- returns: a single object that is a dictionary stating the category with the specifed id. For example, if category_id == 1:
+{'1': 'Science'}
+
+GET '/questions'
+- fetches a dictionary of all the questions ordered by the question's ID. Paginates the results and only shows the first ten 
+- request arguments: None
+- Returns: An object with all the questions paginated by groups of ten. 
+To reuturn the second page requires the use of parameters so /questions?page=2 will return questions 11-20
+
+DELETE '/questions/<int:question_id>'
+- Deletes the specified question by the question id 
+- request arguments: question id. Will be used to delete the specified question
+- returns:  a json object that confirms the deletion
+
+POST '/questions/create'
+- creates a question based on json passed to the object 
+- request arguments: None
+- returns: The new question along with the number of total questions 
+
+POST '/questions/search'
+- queries the database for a specified search term 
+- request arguments: None
+- returns: returns a dictionary of all the objects that the search term found in the database 
+
+GET '/categories/<int:category>/questions'
+- returns all the questions in a specified category
+- request arguments: the category id is used to fetch the proper questions based on that category
+- returns: Returns a dictionary of all the questions in the specified category
+
+POST '/play'
+-  queries the database for a single question that is not one of the questions queried before 
+- request arguments: None
+- returns a single question that is unlike the previous questions. Requires you to post a list of previous questions to ensure that those questions are not repeated. 
+
 
 
 ## Testing
