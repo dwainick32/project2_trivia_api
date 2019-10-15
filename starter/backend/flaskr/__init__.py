@@ -112,6 +112,8 @@ def create_app(test_config=None):
     new_answer = body.get('answer', None)
     new_category = body.get('category', None)
     new_difficulty = body.get('difficulty', None)
+    if new_question is None or new_answer is None:
+      abort(422) 
 
     question = Question(question=new_question, answer=new_answer, category=new_category, difficulty=new_difficulty)
     question.insert()
@@ -164,6 +166,8 @@ def create_app(test_config=None):
     start = (page - 1) * 10
     end = start + 10
     questions = Question.query.filter(Question.category == category).all()
+    if len(questions) == 0:
+      abort(404)
     formatted_questions = [question.format() for question in questions]
     return jsonify({
       'success': True,
@@ -238,5 +242,3 @@ def create_app(test_config=None):
     })
 
   return app
-
-    
